@@ -5,12 +5,28 @@ require_once 'src/core/Request.php';
 
 $router = new Router(new Request());
 
+// ARTISTS
+$router->get('/artists', 'ArtistController@getAll');
+$router->get('/artists/{id}', 'ArtistController@getById');
+$router->get('/artists/{id}/albums', 'ArtistController@getAlbumsByArtistId');
+$router->post('/artists', 'ArtistController@add');
+$router->delete('/artists/{id}', 'ArtistController@delete');
+
+// ALBUMS
 $router->get('/albums', 'AlbumController@getAll');
 $router->get('/albums/{id}', 'AlbumController@getById');
 $router->get('/albums/{id}/tracks', 'AlbumController@getTracksByAlbumId');
 $router->post('/albums', 'AlbumController@add');
 $router->put('/albums/{id}', 'AlbumController@put');
 $router->delete('/albums/{id}', 'AlbumController@delete');
+
+// TRACKS
+$router->get('/tracks', 'TrackController@search');
+$router->get('/tracks/{id}', 'TrackController@getById');
+$router->get('/tracks', 'TrackController@getByComposer');
+$router->post('/tracks', 'TrackController@add');
+$router->put('/tracks/{id}', 'TrackController@put');
+$router->delete('/tracks/{id}', 'TrackController@delete');
 
 
 

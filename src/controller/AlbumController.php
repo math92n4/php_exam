@@ -53,7 +53,7 @@ class AlbumController extends DefaultController {
         $albumId = $this->album->add($data);
         $createdAlbum = $this->album->getById($albumId);
 
-        return $this->response($createdAlbum);
+        return $this->response($createdAlbum, 201);
     }
 
     public function put(int $id) {
@@ -70,7 +70,7 @@ class AlbumController extends DefaultController {
         }
 
         $updatedAlbum = $this->album->getById($id);
-        return $this->response($updatedAlbum);
+        return $this->response($updatedAlbum, 201);
     }
 
     public function delete(int $id) {
