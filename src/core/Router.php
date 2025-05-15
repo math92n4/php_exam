@@ -57,11 +57,6 @@ class Router {
             return;
         }
 
-        $searchQuery = $this->request->getQueryParam('s'); // Capture the search text from the query string
-        if ($searchQuery) {
-            $params['searchTerm'] = $searchQuery; // Pass it as a 'search' parameter to the controller
-        }
-
         // Split the callback into controller and method
         [$controller, $action] = explode('@', $callback);
 

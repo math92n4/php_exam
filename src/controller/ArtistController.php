@@ -30,7 +30,7 @@ class ArtistController extends DefaultController {
     public function getById(int $id) {
         $artist = $this->artist->getById($id);
         if(empty($artist)) {
-            return $this->response(['error' => 'Artist not found'], 400);
+            return $this->response(['error' => 'Artist not found'], 404);
         }
         return $this->response($artist);
     }
@@ -38,7 +38,7 @@ class ArtistController extends DefaultController {
     public function getAlbumsByArtistId(int $id) {
         $rows = $this->artist->getAlbumsByArtistId($id);
         if(empty($rows)) {
-            return $this->response(['error' => 'Artist not found'], 400);
+            return $this->response(['error' => 'Artist not found'], 404);
         }
 
         $artist = [

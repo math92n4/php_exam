@@ -12,7 +12,8 @@ class AlbumController extends DefaultController {
         $this->album = new Album();
     }
 
-    public function getAll(string $searchTerm = null) {
+    public function getAll() {
+        $searchTerm = $this->request->getQueryParam('s');
 
         if($searchTerm) {
             $albums = $this->album->search($searchTerm);
@@ -47,7 +48,7 @@ class AlbumController extends DefaultController {
         $data = $this->request->body();
 
         if (!isset($data['title'], $data['artist_id'])) {
-            return $this->response(['error' => 'Missing required fields: title and artist_id'], 400);
+            return $this->response(['error' => 'Missing required fields: title or artist_id'], 400);
         }
 
         $albumId = $this->album->add($data);
@@ -70,7 +71,7 @@ class AlbumController extends DefaultController {
         }
 
         $updatedAlbum = $this->album->getById($id);
-        return $this->response($updatedAlbum, 201);
+        return $this->response($updatedAlbum);
     }
 
     public function delete(int $id) {
