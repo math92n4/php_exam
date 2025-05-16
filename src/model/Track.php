@@ -38,7 +38,7 @@ class Track extends DefaultModel {
             INSERT INTO track (Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?);
         ";
-        $stmt = $this->execute($sql, $track);
+        $this->execute($sql, $track);
         return $this->db->lastInsertId();
     }
 

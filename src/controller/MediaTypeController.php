@@ -1,0 +1,25 @@
+<?php
+
+require_once 'DefaultController.php';
+require_once 'src/model/MediaType.php';
+
+class MediaTypeController extends DefaultController {
+
+    protected $mediaType;
+
+    public function __construct($requst) {
+        parent::__construct($requst);
+        $this->mediaType = new MediaType();
+    }
+
+    public function getAll() {
+
+        $mediaTypes = $this->mediaType->getAll();
+        
+        if(!$mediaTypes) {
+            return $this->response(['error' => 'No media types found'], 404);
+        }
+
+        return $this->response($mediaTypes);
+    }
+}

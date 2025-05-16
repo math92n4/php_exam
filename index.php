@@ -28,7 +28,20 @@ $router->post('/tracks', 'TrackController@add');
 $router->put('/tracks/{id}', 'TrackController@put');
 $router->delete('/tracks/{id}', 'TrackController@delete');
 
+// MEDIA TYPES
+$router->get('/media_types', 'MediaTypeController@getAll');
 
+// GENRES
+$router->get('/genres', 'GenreController@getAll');
+
+// PLAY LISTS
+$router->get('/playlists', 'PlaylistController@getAll');
+// $router->get('/playlists', 'PlaylistController@search');
+$router->get('/playlists/{id}', 'PlaylistController@getById');
+$router->post('/playlists', 'PlaylistController@add');
+$router->post('/playlists/{id}/tracks', 'PlaylistController@addTrack');
+$router->delete('/playlists/{playlistId}/tracks/{trackId}', 'PlaylistController@deleteTrack');
+$router->delete('/playlists/{id}', 'PlaylistController@delete');
 
 $router->resolve();
 
