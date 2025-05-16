@@ -5,14 +5,15 @@ require_once 'src/model/Artist.php';
 
 class ArtistController extends DefaultController {
 
-    protected $artist;
+    private $artist;
 
     public function __construct($requst) {
         parent::__construct($requst);
         $this->artist = new Artist();
     }
 
-    public function getAll(string $searchTerm = null) {
+    public function getAll() {
+        $searchTerm = $this->request->getQueryParam('s');
 
         if($searchTerm) {
             $artists = $this->artist->search($searchTerm);

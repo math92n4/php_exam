@@ -5,19 +5,32 @@ require_once 'src/model/Playlist.php';
 
 class PlaylistController extends DefaultController {
 
-    protected $playlist;
+    private $playlist;
 
     public function __construct($requst) {
         parent::__construct($requst);
         $this->playlist = new Playlist();
     }
 
-    // TODO: getAll, search
+    public function getAll() {
+        $searchTerm = $this->request->getQueryParam('s');
+
+        if($searchTerm) {
+            $playlists = $this->playlist->search($searchTerm);
+        } else {
+            $playlists = $this->playlist->getAll();
+        }
+
+        if(!$playlists) {
+            return $this->response(['error' => 'No playlist found'], 404);
+        }
+
+        return $this->response($playlists);
+    }
 
     public function getById(int $id) {
         $rows = $this->playlist->getById($id);
 
-        // TODO: this returns error if playlist is empty
         if(!$rows) {
             return $this->response(['error' => 'Playlist not found'], 404);
         }

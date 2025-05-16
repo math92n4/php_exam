@@ -5,7 +5,7 @@ require_once 'src/model/Track.php';
 
 class TrackController extends DefaultController {
 
-    protected $track;
+    private $track;
 
     public function __construct($request) {
         parent::__construct($request);

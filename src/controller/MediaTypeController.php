@@ -5,7 +5,7 @@ require_once 'src/model/MediaType.php';
 
 class MediaTypeController extends DefaultController {
 
-    protected $mediaType;
+    private $mediaType;
 
     public function __construct($requst) {
         parent::__construct($requst);

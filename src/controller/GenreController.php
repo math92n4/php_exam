@@ -5,7 +5,7 @@ require_once 'src/model/Genre.php';
 
 class GenreController extends DefaultController {
 
-    protected $genre;
+    private $genre;
 
     public function __construct($request) {
         parent::__construct($request);

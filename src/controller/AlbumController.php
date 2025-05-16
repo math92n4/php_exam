@@ -5,7 +5,7 @@ require_once 'src/model/Album.php';
 
 class AlbumController extends DefaultController {
 
-    protected $album;
+    private $album;
 
     public function __construct($request) {
         parent::__construct($request);

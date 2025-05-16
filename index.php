@@ -34,8 +34,9 @@ $router->get('/media_types', 'MediaTypeController@getAll');
 // GENRES
 $router->get('/genres', 'GenreController@getAll');
 
-// PLAY LISTS
+// PLAYLISTS
 $router->get('/playlists', 'PlaylistController@getAll');
+
 // $router->get('/playlists', 'PlaylistController@search');
 $router->get('/playlists/{id}', 'PlaylistController@getById');
 $router->post('/playlists', 'PlaylistController@add');
