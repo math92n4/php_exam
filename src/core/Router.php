@@ -1,4 +1,7 @@
 <?php
+
+require_once 'Logger.php';
+
 class Router {
 
     private $request;
@@ -54,6 +57,7 @@ class Router {
         if (!$callback) {
             http_response_code(404);
             header('Content-Type: application/json');
+            Logger::log("$method $path 404 ");
             echo json_encode(["error" => "Not found"]);
             return;
         }
@@ -65,7 +69,17 @@ class Router {
         require_once "src/controller/{$controller}.php";
         $controllerInstance = new $controller($this->request);
 
-        // Call the controller method and pass individual parameters from the $params array
-        echo json_encode(call_user_func_array([$controllerInstance, $action], $params)); // Pass parameters dynamically
+        
+            // Call the controller method and pass individual parameters from the $params array
+            $result = call_user_func_array([$controllerInstance, $action], $params); // Pass parameters dynamically
+
+            $statusCode = http_response_code();
+            Logger::log("$method $path $statusCode " . ($statusCode === 200 ? 'OK' : ''));
+
+            echo json_encode($result);
+
+        } 
+
+        
     }
-}
+
