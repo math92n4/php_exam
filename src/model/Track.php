@@ -42,8 +42,27 @@ class Track extends DefaultModel {
         return $this->db->lastInsertId();
     }
 
-    public function put(int $id) {
+    public function put(int $id, array $track) {
+        if(empty($track)) {
+            return false;
+        }
+
+        $dbColumns = [];
+        $values = [];
+
+        foreach($track as $column => $value) {
+            $dbColumns[] = "$column = ?";
+            $values[] = $value;
+        }
+        $values[] = $id;
+
+        $sql = "
+            UPDATE track SET " . implode(", ", $dbColumns) . " WHERE TrackId = ?;
+        ";
         
+        $stmt = $this->execute($sql, $values);
+
+        return $stmt->rowCount() > 0;
     }
 
     private function isOnPlaylist(int $id) {

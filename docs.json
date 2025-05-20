@@ -1,0 +1,389 @@
+{
+    "endpoints": [
+        {
+            "entity": "Artists",
+            "method": "GET",
+            "path": "/artists",
+            "description": "Retrieves all artists"
+        },
+        {
+            "entity": "Artists",
+            "method": "GET",
+            "path": "/artists/{id}",
+            "description": "Retrieves one artist",
+            "params": {
+                "id": {
+                    "type": "integer",
+                    "description": "ID of the artist"
+                }
+            }
+        },
+        {
+            "entity": "Artists",
+            "method": "GET",
+            "path": "/artists?s=<search_text>",
+            "description": "Retrieves artists whose name includes the search text",
+            "params": {
+                "s": {
+                    "type": "string",
+                    "description": "The text to search for in artist names"
+                }
+                
+            }
+        },
+        {
+            "entity": "Artists",
+            "method": "GET",
+            "path": "/artists/{id}/albums",
+            "description": "Retrieves all albums by an artist",
+            "params": {
+                "id": {
+                    "type": "integer",
+                    "description": "ID of the artist"
+                }
+            }
+        },
+        {
+            "entity": "Artists",
+            "method": "POST",
+            "path": "/artists",
+            "description": "Creates an artist",
+            "params": {
+                "name": {
+                    "type": "string",
+                    "description": "Name of the artist"
+                }
+            }
+        },
+        {
+            "entity": "Artists",
+            "method": "DELETE",
+            "path": "/artists{id}",
+            "description": "Deletes an artist, only if it does not have albums",
+            "params": {
+                "id": {
+                    "type": "string",
+                    "description": "ID of the artist"
+                }
+            }
+        },
+        {
+            "entity": "Albums",
+            "method": "GET",
+            "path": "/albums",
+            "description": "Retrieves all albums, including their artists"
+        },
+        {
+            "entity": "Albums",
+            "method": "GET",
+            "path": "/albums/{id}",
+            "description": "Retrieves one album, including its artist",
+            "params": {
+                "id":{
+                    "type": "integer",
+                    "description": "ID of the album"
+                }
+            }
+        },
+        {
+            "entity": "Albums",
+            "method": "GET",
+            "path": "/albums?s=<search_text>",
+            "description": "Retrieves albums whose title includes the search text, including their artists",
+            "params": {
+                "s":{
+                    "type": "string",
+                    "description": "The text to search for in album names"
+                }
+            }
+        },
+        {
+            "entity": "Albums",
+            "method": "GET",
+            "path": "/albums/{id}/tracks",
+            "description": "Retrieves all tracks in an album, including their media types and genres",
+            "params": {
+                "id":{
+                    "type": "integer",
+                    "description": "ID of the album"
+                }
+            }
+        },
+        {
+            "entity": "Albums",
+            "method": "POST",
+            "path": "/albums",
+            "description": "Creates an album",
+            "params": {
+                "title": {
+                    "type": "string",
+                    "description": "Name of the album"
+                },
+                "artist_id": {
+                    "type": "integer",
+                    "description": "ID of the artist - creator of the album"
+                }
+            }
+        },
+        {
+            "entity": "Albums",
+            "method": "PUT",
+            "path": "/albums/{id}",
+            "description": "Edits the title and/or the artist of an album",
+            "params": {
+                "title?": {
+                    "type": "string",
+                    "description": "Name of the album"
+                },
+                "artist_id?": {
+                    "type": "integer",
+                    "description": "ID of the artist - creator of the album"
+                }
+            }
+        },
+        {
+            "entity": "Albums",
+            "method": "DELETE",
+            "path": "/albums/{id}",
+            "description": "Deletes an album, only if it does not have tracks",
+            "params": {
+                "id": {
+                    "type": "integer",
+                    "description": "ID of the album"
+                }
+            }
+        },
+        {
+            "entity": "Tracks",
+            "method": "GET",
+            "path": "/tracks/{id}",
+            "description": "Retrieves one track, including its media type and genre",
+            "params": {
+                "id": {
+                    "type": "integer",
+                    "description": "ID of the track"
+                }
+            }
+        },
+        {
+            "entity": "Tracks",
+            "method": "GET",
+            "path": "/tracks?s=<search_text>",
+            "description": "Retrieves tracks whose name includes the search text, including their media types and genres",
+            "params": {
+                "s": {
+                    "type": "string",
+                    "description": "The text to search for in track names"
+                }
+            }
+        },
+        {
+            "entity": "Tracks",
+            "method": "GET",
+            "path": "/tracks?composer=<composer>",
+            "description": "Retrieves tracks by a specific composer",
+            "params": {
+                "composer": {
+                    "type": "string",
+                    "description": "The text to search for in composer names"
+                }
+            }
+        },
+        {
+            "entity": "Tracks",
+            "method": "POST",
+            "path": "/tracks",
+            "description": "Creates a track",
+            "params": {
+                "name": {
+                    "type": "string",
+                    "description": "Track name"
+                },
+                "album_id": {
+                    "type": "integer",
+                    "description": "ID of the album"
+                },
+                "media_type_id": {
+                    "type": "integer",
+                    "description": "ID of the media type"
+                },
+                "genre_id": {
+                    "type": "integer",
+                    "description": "ID of the genre"
+                },
+                "composer": {
+                    "type": "string",
+                    "description": "Name of the composer(s)"
+                },
+                "milliseconds": {
+                    "type": "integer",
+                    "description": "The track's length in milliseconds"
+                },
+                "bytes": {
+                    "type": "integer",
+                    "description": "Bytes"
+                },
+                "unit_price": {
+                    "type": "number",
+                    "multipleOf": 0.01,
+                    "description": "The unit price"
+                }
+            }
+        },
+        {
+            "entity": "Tracks",
+            "method": "PUT",
+            "path": "/tracks/{id}",
+            "description": "Edits track information",
+            "params": {
+                "id": {
+                    "type": "integer",
+                    "description": "ID of the track"
+                },
+                "name?": {
+                    "type": "string",
+                    "description": "Track name"
+                },
+                "album_id?": {
+                    "type": "integer",
+                    "description": "ID of the album"
+                },
+                "media_type_id?": {
+                    "type": "integer",
+                    "description": "ID of the media type"
+                },
+                "genre_id?": {
+                    "type": "integer",
+                    "description": "ID of the genre"
+                },
+                "composer?": {
+                    "type": "string",
+                    "description": "Name of the composer(s)"
+                },
+                "milliseconds?": {
+                    "type": "integer",
+                    "description": "The track's length in milliseconds"
+                },
+                "bytes?": {
+                    "type": "integer",
+                    "description": "Bytes"
+                },
+                "unit_price?": {
+                    "type": "number",
+                    "multipleOf": 0.01,
+                    "description": "The unit price"
+                }
+            }
+        },
+        {
+            "entity": "Tracks",
+            "method": "DELETE",
+            "path": "/tracks/{id}",
+            "description": "Deletes a track, only if it does not belong to a playlist",
+            "params": {
+                "id": {
+                    "type": "integer",
+                    "description": "ID of the album"
+                }
+            }
+        },
+        {
+            "entity": "Media Types",
+            "method": "GET",
+            "path": "/media_types",
+            "description": "Retrieves all media types"
+        },
+        {
+            "entity": "Genres",
+            "method": "GET",
+            "path": "/genres",
+            "description": "Retrives all genres"
+        },
+        {
+            "entity": "Playlists",
+            "method": "GET",
+            "path": "/playlists",
+            "description": "Retrives all playlists"
+        },
+        {
+            "entity": "Playlists",
+            "method": "GET",
+            "path": "/playlists/{id}",
+            "description": "Retrieves one playlist, including its tracks",
+            "params": {
+                "id": {
+                    "type": "integer",
+                    "description": "ID of the playlist"
+                }
+            }
+        },
+        {
+            "entity": "Playlists",
+            "method": "GET",
+            "path": "/playlists?s=<search_text>",
+            "description": "Retrieves playlists whose name includes the search text",
+            "params": {
+                "s": {
+                    "type": "string",
+                    "description": "The name of the playlist to search for"
+                }
+            }
+        },
+        {
+            "entity": "Playlists",
+            "method": "POST",
+            "path": "/playlists",
+            "description": "Creates a playlist",
+            "params": {
+                "name": {
+                    "type": "string",
+                    "description": "The name of the playlist"
+                }
+            }
+        },
+        {
+            "entity": "Playlists",
+            "method": "POST",
+            "path": "/playlists/{id}/tracks",
+            "description": "Assigns a track to a playlist",
+            "params": {
+                "id": {
+                    "type": "integer",
+                    "description": "ID of the playlist"
+                },
+                "track_id": {
+                    "type": "integer",
+                    "description": "ID of the track"
+                }
+            }
+        },
+        {
+            "entity": "Playlists",
+            "method": "DELETE",
+            "path": "/playlists/{playlist_id}/tracks/{track_id}",
+            "description": "Removes a track from a playlist",
+            "params": {
+                "playlist_id": {
+                    "type": "integer",
+                    "description": "ID of the playlist"
+                },
+                "track_id": {
+                    "type": "integer",
+                    "description": "ID of the track"
+                }
+            }
+        },
+        {
+            "entity": "Playlists",
+            "method": "DELETE",
+            "path": "/playlists/{id}",
+            "description": "Deletes a playlist, only if it does not contain tracks",
+            "params": {
+                "id": {
+                    "type": "integer",
+                    "description": "ID of the playlist"
+                }
+            }
+        }
+    ]
+}

@@ -80,7 +80,43 @@ class TrackController extends DefaultController {
     }
 
     public function put(int $id) {
+        if(!$this->track->getById($id)) {
+            return $this->response(['error' => 'Track not found'], 404);
+        }
 
+        $data = $this->request->body();
+
+        $keyMap = [
+            'name' => 'Name',
+            'album_id' => 'AlbumId',
+            'media_type_id' => 'MediaTypeId',
+            'genre_id' => 'GenreId',
+            'composer' => 'Composer',
+            'milliseconds' => 'Milliseconds',
+            'bytes' => 'Bytes',
+            'unit_price' => 'UnitPrice'
+        ];
+
+        $updateFields = [];
+
+        foreach ($keyMap as $field => $dbColumn) {
+            if (isset($data[$field])) {
+                $updateFields[$dbColumn] = $data[$field];
+            }
+        }
+
+        if (empty($updateFields)) {
+            return $this->response(['error' => 'No valid fields'], 400);
+        }
+
+        $success = $this->track->put($id, $updateFields);
+
+        if (!$success) {
+            return $this->response(['error' => 'Failed to update track'], 500);
+        }
+
+        $updatedTrack = $this->track->getById($id);
+        return $this->response($updatedTrack);
     }
 
     public function delete(int $id) {

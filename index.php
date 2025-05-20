@@ -36,13 +36,14 @@ $router->get('/genres', 'GenreController@getAll');
 
 // PLAYLISTS
 $router->get('/playlists', 'PlaylistController@getAll');
-
-// $router->get('/playlists', 'PlaylistController@search');
 $router->get('/playlists/{id}', 'PlaylistController@getById');
 $router->post('/playlists', 'PlaylistController@add');
 $router->post('/playlists/{id}/tracks', 'PlaylistController@addTrack');
 $router->delete('/playlists/{playlistId}/tracks/{trackId}', 'PlaylistController@deleteTrack');
 $router->delete('/playlists/{id}', 'PlaylistController@delete');
+
+// DOCS
+$router->get('/docs', 'DocsController@getDocs');
 
 $router->resolve();
 
