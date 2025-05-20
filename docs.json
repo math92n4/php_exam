@@ -58,7 +58,7 @@
         {
             "entity": "Artists",
             "method": "DELETE",
-            "path": "/artists{id}",
+            "path": "/artists/{id}",
             "description": "Deletes an artist, only if it does not have albums",
             "params": {
                 "id": {

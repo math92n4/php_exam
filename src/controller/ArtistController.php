@@ -13,71 +13,103 @@ class ArtistController extends DefaultController {
     }
 
     public function getAll() {
-        $searchTerm = $this->request->getQueryParam('s');
+        try {
+            $searchTerm = $this->request->getQueryParam('s');
 
-        if($searchTerm) {
-            $artists = $this->artist->search($searchTerm);
-        } else {
-            $artists = $this->artist->getAll();
+            if($searchTerm) {
+                $artists = $this->artist->search($searchTerm);
+            } else {
+                $artists = $this->artist->getAll();
+            }
+
+            if(!$artists) {
+                return $this->response(['error' => 'No artists found'], 404);
+            }
+
+            return $this->response($artists);
+
+        } catch(Exception $e) {
+            return $this->response(['error' => $e->getMessage()], 500);
         }
-
-        if(!$artists) {
-            return $this->response(['error' => 'No artists found'], 404);
-        }
-
-        return $this->response($artists);
+        
     }
 
     public function getById(int $id) {
-        $artist = $this->artist->getById($id);
-        if(empty($artist)) {
-            return $this->response(['error' => 'Artist not found'], 404);
+        try {
+            $artist = $this->artist->getById($id);
+
+            if(empty($artist)) {
+                return $this->response(['error' => 'Artist not found'], 404);
+            }
+
+            return $this->response($artist);
+
+        } catch(Exception $e) {
+            return $this->response(['error' => $e->getMessage()], 500);
         }
-        return $this->response($artist);
+        
     }
 
     public function getAlbumsByArtistId(int $id) {
-        $rows = $this->artist->getAlbumsByArtistId($id);
-        if(empty($rows)) {
-            return $this->response(['error' => 'Artist not found'], 404);
-        }
+        try {
+            $rows = $this->artist->getAlbumsByArtistId($id);
+            if(empty($rows)) {
+                return $this->response(['error' => 'Artist not found'], 404);
+            }
 
-        $artist = [
-            "ArtistId" => $rows[0]['ArtistId'],
-            "ArtistName" => $rows[0]['ArtistName'],
-            "Albums" => []
-        ];
-
-        foreach ($rows as $row) {
-            $artist['Albums'][] = [
-                "AlbumId" => $row['AlbumId'],
-                "AlbumTitle" => $row['AlbumTitle']
+            $artist = [
+                "ArtistId" => $rows[0]['ArtistId'],
+                "ArtistName" => $rows[0]['ArtistName'],
+                "Albums" => []
             ];
-        }
 
-        return $this->response($artist);
+            foreach ($rows as $row) {
+                $artist['Albums'][] = [
+                    "AlbumId" => $row['AlbumId'],
+                    "AlbumTitle" => $row['AlbumTitle']
+                ];
+            }
+
+            return $this->response($artist);
+
+        } catch(Exception $e) {
+            return $this->response(['error' => $e->getMessage()], 500);
+        }
+        
     }
 
     public function add() {
-        $data = $this->request->body();
+        try {
+            $data = $this->request->body();
 
-        if(!isset($data['name'])) {
-            return $this->response(['error' => 'Missing name field']);
+            if(!isset($data['name'])) {
+                return $this->response(['error' => 'Missing name field']);
+            }
+
+            $artistId = $this->artist->add($data['name']);
+            $createdArtist = $this->artist->getById($artistId);
+
+            return $this->response($createdArtist, 201);
+
+        } catch(Exception $e) {
+            return $this->response(['error' => $e->getMessage()], 500);
         }
-
-        $artistId = $this->artist->add($data['name']);
-        $createdArtist = $this->artist->getById($artistId);
-
-        return $this->response($createdArtist, 201);
+        
     }
 
     public function delete(int $id) {
-        $succes = $this->artist->delete($id);
-        if(!$succes) {
-            return $this->response(['error' => 'Could not delete'], 400);
-        }
+        try {
+            $succes = $this->artist->delete($id);
+            if(!$succes) {
+                return $this->response(['error' => 'Could not delete'], 400);
+            }
 
-        return $this->response(['data' => "Artist id: " . $id . " deleted"], 200);
+            return $this->response(['data' => "Artist id: " . $id . " deleted"], 200);
+
+        } catch(Exception $e) {
+            return $this->response(['error' => $e->getMessage()], 500);
+        }
+        
     }
 
 }

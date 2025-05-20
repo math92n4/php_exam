@@ -13,14 +13,19 @@ class GenreController extends DefaultController {
     }
 
     public function getAll() {
+        try {
+            $genres = $this->genre->getAll();
 
-        $genres = $this->genre->getAll();
+            if(!$genres) {
+                return $this->response(['error' => 'No genres found'], 404);
+            }
 
-        if(!$genres) {
-            return $this->response(['error' => 'No genres found'], 404);
+            return $this->response($genres);
+
+        } catch(Exception $e) {
+            return $this->response(['error' => $e->getMessage()], 500);
         }
-
-        return $this->response($genres);
+        
     }
 
 }

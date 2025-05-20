@@ -13,13 +13,18 @@ class MediaTypeController extends DefaultController {
     }
 
     public function getAll() {
-
-        $mediaTypes = $this->mediaType->getAll();
+        try {
+            $mediaTypes = $this->mediaType->getAll();
         
-        if(!$mediaTypes) {
-            return $this->response(['error' => 'No media types found'], 404);
-        }
+            if(!$mediaTypes) {
+                return $this->response(['error' => 'No media types found'], 404);
+            }
 
-        return $this->response($mediaTypes);
+            return $this->response($mediaTypes);
+
+        } catch(Exception $e) {
+            return $this->response(['error' => $e->getMessage()], 500);
+        }
+        
     }
 }

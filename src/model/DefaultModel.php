@@ -13,7 +13,17 @@ class DefaultModel {
 
     protected function execute($sql, $params = []) {
         $stmt = $this->db->prepare($sql);
-        $stmt->execute($params);
+
+        if(!$stmt) {
+            $error = $this->db->errorInfo();
+            throw new Exception("Could not prepare statement: " . $error);
+        }
+
+        if(!$stmt->execute($params)) {
+            $error = $this->db->errorInfo();
+            throw new Exception("Could no execute statement: " . $error);
+        }
+
         return $stmt;
     }
 
