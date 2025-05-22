@@ -117,7 +117,7 @@ class PlaylistController extends DefaultController {
                                     'TrackId' => $trackId], 201);
 
         } catch(Exception $e) {
-            return $this->response(['error' => $e->getMessage()], 500);
+            return $this->response(['error' => "Failed to add track to playlist"], 500);
         }
         
 
@@ -130,6 +130,20 @@ class PlaylistController extends DefaultController {
                 return $this->response(['error' => 'Error deleting track'], 500);
             }
             return $this->response(['message' => 'TrackId: ' . $trackId . ' deleted from PlaylistId: ' . $playlistId], 200);
+
+        } catch(Exception $e) {
+            return $this->response(['error' => $e->getMessage()], 500);
+        }
+        
+    }
+
+    public function delete(int $id) {
+        try {
+            $success = $this->playlist->delete($id);
+            if(!$success) {
+                return $this->response(['error' => 'Error deleting playlist'], 500);
+            }
+            return $this->response(['message' => 'PlaylistId: ' . $id . ' deleted'], 200);
 
         } catch(Exception $e) {
             return $this->response(['error' => $e->getMessage()], 500);

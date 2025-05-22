@@ -74,7 +74,7 @@ class AlbumController extends DefaultController {
             return $this->response($createdAlbum, 201);
 
         } catch(Exception $e) {
-            return $this->response(['error' => $e->getMessage()], 500);
+            return $this->response(['error' => "Could not add album"], 500);
         }
         
     }
@@ -97,7 +97,7 @@ class AlbumController extends DefaultController {
             return $this->response($updatedAlbum);
 
         } catch(Exception $e) {
-            return $this->response(['error' => $e->getMessage()], 500);
+            return $this->response(['error' => "Could not update album"], 500);
         }
         
     }
@@ -112,7 +112,7 @@ class AlbumController extends DefaultController {
             return $this->response(['data' => "Album id: " . $id . " deleted"], 200);
 
         } catch(Exception $e) {
-            return $this->response(['error' => $e->getMessage()], 500);
+            return $this->response(['error' => "Could not delete album"], 500);
         }
     }
 

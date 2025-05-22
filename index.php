@@ -49,7 +49,6 @@ $router->delete('/albums/{id}', 'AlbumController@delete');
 // TRACKS
 $router->get('/tracks', 'TrackController@search');
 $router->get('/tracks/{id}', 'TrackController@getById');
-$router->get('/tracks', 'TrackController@getByComposer');
 $router->post('/tracks', 'TrackController@add');
 $router->put('/tracks/{id}', 'TrackController@put');
 $router->delete('/tracks/{id}', 'TrackController@delete');
@@ -71,5 +70,26 @@ $router->delete('/playlists/{id}', 'PlaylistController@delete');
 // DOCS
 $router->get('/docs', 'DocsController@getDocs');
 
-$router->resolve();
+
+try {
+    $router->resolve();
+
+} catch (TypeError $e) {
+
+    http_response_code(400);
+    header('Content-Type: application/json');
+    echo json_encode([
+        'error' => 'Invalid parameter type. Go to /docs for info'
+    ]);
+
+} catch (Exception $e) {
+
+    http_response_code(500);
+    header('Content-Type: application/json');
+    echo json_encode([
+        'error' => 'Server error'
+    ]);
+
+}
+
 

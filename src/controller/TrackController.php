@@ -13,13 +13,19 @@ class TrackController extends DefaultController {
     public function search() {
         try {
             $searchTerm = $this->request->getQueryParam('s');
-            if (!$searchTerm) {
-                return $this->response(['error' => 'Search term is required'], 400);
+            $composer = $this->request->getQueryParam('composer');
+
+            if ($composer) {
+                $tracks = $this->track->getByComposer($composer);
+
+            } elseif ($searchTerm) {
+                $tracks = $this->track->search($searchTerm);
+
+            } else {
+                return $this->response(['error' => 'Search term or composer is required'], 400);
             }
 
-            $tracks = $this->track->search($searchTerm);
-
-            if(!$tracks) {
+            if (!$tracks) {
                 return $this->response(['error' => 'No tracks found'], 404);
             }
 
@@ -28,7 +34,6 @@ class TrackController extends DefaultController {
         } catch(Exception $e) {
             return $this->response(['error' => $e->getMessage()], 500);
         }
-        
     }
 
     public function getById(int $id) {
@@ -45,28 +50,6 @@ class TrackController extends DefaultController {
         
     }
 
-    public function getByComposer() {
-        try {
-            $searchTerm = $this->request->getQueryParam('composer');
-        
-            if (!$searchTerm) {
-                return $this->response(['error' => 'Composer search is required'], 400);
-            }
-
-            $tracks = $this->track->getByComposer($searchTerm);
-
-            if(!$tracks) {
-                return $this->response(['error' => 'No tracks found'], 404);
-            }
-
-            return $this->response($tracks);
-
-        } catch(Exception $e) {
-            return $this->response(['error' => $e->getMessage()], 500);
-        }
-        
-        
-    }
 
     public function add() {
         try {
