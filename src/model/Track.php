@@ -7,9 +7,9 @@ class Track extends DefaultModel {
     public function search(string $searchTerm): bool|array {
         $sql = "
             SELECT t.TrackId, t.Name as TrackName, t.Composer, t.Milliseconds, t.Bytes, t.UnitPrice,
-            m.MediaTypeId, m.Name as MediaName, g.GenreId, g.Name from track t
-            INNER JOIN mediatype m on t.MediaTypeId = m.MediaTypeId
-            INNER JOIN genre g on t.GenreId = g.GenreId
+            m.MediaTypeId, m.Name as MediaName, g.GenreId, g.Name from Track t
+            INNER JOIN MediaType m on t.MediaTypeId = m.MediaTypeId
+            INNER JOIN Genre g on t.GenreId = g.GenreId
             WHERE t.Name LIKE ?;
         ";
         $stmt = $this->execute($sql, ['%' . $searchTerm . '%']);
@@ -18,7 +18,7 @@ class Track extends DefaultModel {
 
     public function getById(int $id) {
         $sql = "
-            SELECT * FROM track WHERE TrackId = ?;
+            SELECT * FROM Track WHERE TrackId = ?;
         ";
         $stmt = $this->execute($sql, [$id]);
         return $stmt->fetch();
@@ -26,7 +26,7 @@ class Track extends DefaultModel {
 
     public function getByComposer(string $searchTerm) {
         $sql = "
-            SELECT * FROM track WHERE composer LIKE ?;
+            SELECT * FROM Track WHERE Composer LIKE ?;
         ";
         $stmt = $this->execute($sql, ['%' . $searchTerm . '%']);
         return $stmt->fetchAll();
@@ -34,7 +34,7 @@ class Track extends DefaultModel {
 
     public function add(array $track) {
         $sql = "
-            INSERT INTO track (Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice)
+            INSERT INTO Track (Name, AlbumId, MediaTypeId, GenreId, Composer, Milliseconds, Bytes, UnitPrice)
             VALUES (?, ?, ?, ?, ?, ?, ?, ?);
         ";
         $this->execute($sql, $track);
@@ -56,7 +56,7 @@ class Track extends DefaultModel {
         $values[] = $id;
 
         $sql = "
-            UPDATE track SET " . implode(", ", $dbColumns) . " WHERE TrackId = ?;
+            UPDATE Track SET " . implode(", ", $dbColumns) . " WHERE TrackId = ?;
         ";
         
         $stmt = $this->execute($sql, $values);
@@ -66,7 +66,7 @@ class Track extends DefaultModel {
 
     private function isOnPlaylist(int $id) {
         $sql = "
-            SELECT COUNT(*) as count FROM playlisttrack WHERE TrackId = ?;
+            SELECT COUNT(*) as count FROM PlaylistTrack WHERE TrackId = ?;
         ";
         $stmt = $this->execute($sql, [$id]);
         $result = $stmt->fetch();
@@ -80,7 +80,7 @@ class Track extends DefaultModel {
         }
 
         $sql = "
-            DELETE FROM track WHERE TrackId = ?;
+            DELETE FROM Track WHERE TrackId = ?;
         ";
         $stmt = $this->execute($sql, [$id]);
         return $stmt->rowCount() > 0;

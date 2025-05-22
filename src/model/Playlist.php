@@ -6,7 +6,7 @@ class Playlist extends DefaultModel {
 
     public function getAll(): bool|array {
         $sql = "
-            SELECT * FROM playlist;
+            SELECT * FROM Playlist;
         ";
         $stmt = $this->execute($sql);
         return $stmt->fetchAll();
@@ -14,7 +14,7 @@ class Playlist extends DefaultModel {
 
     public function search(string $searchTerm) {
         $sql = "
-            SELECT * FROM playlist WHERE Name LIKE ?;
+            SELECT * FROM Playlist WHERE Name LIKE ?;
         ";
 
         $stmt = $this->execute($sql, ['%' . $searchTerm . '%']);
@@ -26,9 +26,9 @@ class Playlist extends DefaultModel {
             SELECT p.PlaylistId, p.Name as PlaylistName,
             t.TrackId, t.Name as TrackName, t.AlbumId, t.MediaTypeId, t.GenreId,
             t.Composer, t.MilliSeconds, t.Bytes, t.UnitPrice 
-            FROM playlist p
-            LEFT JOIN playlisttrack pt ON p.PlaylistId = pt.PlaylistId
-            LEFT JOIN track t ON pt.TrackId = t.TrackId
+            FROM Playlist p
+            LEFT JOIN PlaylistTrack pt ON p.PlaylistId = pt.PlaylistId
+            LEFT JOIN Track t ON pt.TrackId = t.TrackId
             WHERE p.PlaylistId = ?;
         ";
         $stmt = $this->execute($sql, [$id]);
@@ -49,7 +49,7 @@ class Playlist extends DefaultModel {
 
     public function add(string $name) {
         $sql = "
-            INSERT INTO playlist(Name)
+            INSERT INTO Playlist(Name)
             VALUES (?);
         ";
 
@@ -59,7 +59,7 @@ class Playlist extends DefaultModel {
 
     public function addTrack(int $playlistId, int $trackId) {
         $sql = "
-            INSERT INTO playlisttrack(PlaylistId, TrackId)
+            INSERT INTO PlaylistTrack(PlaylistId, TrackId)
             VALUES(?, ?);
         ";
 
@@ -70,7 +70,7 @@ class Playlist extends DefaultModel {
 
     public function deleteTrack(int $playlistId, int $trackId) {
         $sql = "
-            DELETE FROM playlisttrack WHERE PlaylistId = ? AND TrackId = ?; 
+            DELETE FROM PlaylistTrack WHERE PlaylistId = ? AND TrackId = ?; 
         ";
 
         $stmt = $this->execute($sql, [$playlistId, $trackId]);
@@ -80,7 +80,7 @@ class Playlist extends DefaultModel {
 
     private function hasTracks(int $id) {
         $sql = "
-            SELECT COUNT(*) as count FROM playlisttrack WHERE PlaylistId = ?;
+            SELECT COUNT(*) as count FROM PlaylistTrack WHERE PlaylistId = ?;
         ";
 
         $stmt = $this->execute($sql, [$id]);
@@ -95,7 +95,7 @@ class Playlist extends DefaultModel {
         }
 
         $sql = "
-            DELETE FROM playlist WHERE PlaylistId = ?;
+            DELETE FROM Playlist WHERE PlaylistId = ?;
         ";
 
         $stmt = $this->execute($sql, [$id]);

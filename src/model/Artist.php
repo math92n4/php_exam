@@ -4,14 +4,14 @@
 class Artist extends DefaultModel {
 
     public function getAll(): bool|array {
-        $sql = "SELECT ArtistId, Name as AristName from artist;";
+        $sql = "SELECT ArtistId, Name as AristName from Artist;";
         $stmt = $this->execute($sql);
         return $stmt->fetchAll();
     }
 
     public function search(string $searchTerm): bool|array {
         $sql = "
-            SELECT ArtistId, Name as ArtistName from artist
+            SELECT ArtistId, Name as ArtistName from Artist
             WHERE Name LIKE ?;
         ";
         $stmt = $this->execute($sql, ['%' . $searchTerm . '%']);
@@ -20,7 +20,7 @@ class Artist extends DefaultModel {
 
     public function getById(int $id): bool|array {
         $sql = "
-            SELECT ArtistId, Name as ArtistName from artist
+            SELECT ArtistId, Name as ArtistName from Artist
             WHERE ArtistId = ?;
         ";
         $stmt = $this->execute($sql, [$id]);
@@ -30,8 +30,8 @@ class Artist extends DefaultModel {
     public function getAlbumsByArtistId(int $id): bool|array {
         $sql = "
             SELECT a.ArtistId, a.Name as ArtistName, ar.AlbumId, ar.Title as AlbumTitle
-            FROM artist a
-            INNER JOIN album ar on a.ArtistId = ar.ArtistId
+            FROM Artist a
+            INNER JOIN Album ar on a.ArtistId = ar.ArtistId
             WHERE a.ArtistId = ?;
         ";
         $stmt = $this->execute($sql, [$id]);
@@ -40,7 +40,7 @@ class Artist extends DefaultModel {
 
     public function add(string $name) {
         $sql = "
-            INSERT INTO artist(Name)
+            INSERT INTO Artist(Name)
             VALUES(?)
         ";
 
@@ -49,7 +49,7 @@ class Artist extends DefaultModel {
     }
 
     private function hasAlbums(int $id): bool {
-        $sql = "SELECT COUNT(*) as count FROM album WHERE ArtistId = ?";
+        $sql = "SELECT COUNT(*) as count FROM Album WHERE ArtistId = ?";
         $stmt = $this->execute($sql, [$id]);
         $result = $stmt->fetch();
 
@@ -61,7 +61,7 @@ class Artist extends DefaultModel {
             return false;
         }
 
-        $sql = "DELETE FROM artist WHERE ArtistId = ?";
+        $sql = "DELETE FROM Artist WHERE ArtistId = ?";
         $stmt = $this->execute($sql, [$id]);
         return $stmt->rowCount() > 0;
     }
