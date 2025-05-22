@@ -1,7 +1,5 @@
 <?php
 
-require_once 'DefaultController.php';
-require_once 'src/model/Playlist.php';
 
 class PlaylistController extends DefaultController {
 

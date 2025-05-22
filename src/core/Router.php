@@ -1,7 +1,5 @@
 <?php
 
-require_once 'Logger.php';
-
 class Router {
 
     private $request;

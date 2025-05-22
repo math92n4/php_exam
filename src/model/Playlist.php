@@ -1,6 +1,6 @@
 <?php
 
-require_once "DefaultModel.php";
+
 
 class Playlist extends DefaultModel {
 

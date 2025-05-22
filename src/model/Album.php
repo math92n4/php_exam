@@ -1,8 +1,6 @@
 <?php
 
 
-require_once "DefaultModel.php";
-
 class Album extends DefaultModel {
 
     public function getAll(): bool|array {

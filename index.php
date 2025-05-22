@@ -1,7 +1,33 @@
 <?php
 
-require_once 'src/core/Router.php';
-require_once 'src/core/Request.php';
+// CORE
+require_once __DIR__ . '/src/core/Router.php';
+require_once __DIR__ . '/src/core/Request.php';
+require_once __DIR__ . '/src/core/Logger.php';
+
+// CONTROLLER
+require_once __DIR__ . '/src/controller/DefaultController.php';
+require_once __DIR__ . '/src/controller/ArtistController.php';
+require_once __DIR__ . '/src/controller/AlbumController.php';
+require_once __DIR__ . '/src/controller/TrackController.php';
+require_once __DIR__ . '/src/controller/MediaTypeController.php';
+require_once __DIR__ . '/src/controller/GenreController.php';
+require_once __DIR__ . '/src/controller/PlaylistController.php';
+require_once __DIR__ . '/src/controller/DocsController.php';
+
+// DB
+require_once __DIR__ . '/src/db/DBCredentials.php';
+require_once __DIR__ . '/src/db/Database.php';
+
+// MODEL
+require_once __DIR__ . '/src/model/DefaultModel.php';
+require_once __DIR__ . '/src/model/Artist.php';
+require_once __DIR__ . '/src/model/Album.php';
+require_once __DIR__ . '/src/model/Track.php';
+require_once __DIR__ . '/src/model/MediaType.php';
+require_once __DIR__ . '/src/model/Genre.php';
+require_once __DIR__ . '/src/model/Playlist.php';
+
 
 $router = new Router(new Request());
 

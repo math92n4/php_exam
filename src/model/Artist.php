@@ -1,6 +1,5 @@
 <?php
 
-require_once "DefaultModel.php";
 
 class Artist extends DefaultModel {
 

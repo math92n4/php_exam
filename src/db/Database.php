@@ -1,6 +1,5 @@
 <?php
 
-require_once 'DBCredentials.php';
 
 class Database extends DBCredentials {
 

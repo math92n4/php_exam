@@ -1,6 +1,5 @@
 <?php
 
-require_once 'DefaultController.php';
 
 class DocsController extends DefaultController {
 

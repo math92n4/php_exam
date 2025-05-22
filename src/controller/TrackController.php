@@ -1,7 +1,5 @@
 <?php
 
-require_once 'DefaultController.php';
-require_once 'src/model/Track.php';
 
 class TrackController extends DefaultController {
 
