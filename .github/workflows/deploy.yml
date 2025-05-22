@@ -19,6 +19,7 @@ jobs:
         host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
+        passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
         source: "."
         target: "/var/www/html/php_exam"
 
@@ -28,5 +29,6 @@ jobs:
         host: ${{ secrets.SERVER_HOST }}
         username: ${{ secrets.SERVER_USER }}
         key: ${{ secrets.SSH_PRIVATE_KEY }}
+        passphrase: ${{ secrets.SSH_KEY_PASSPHRASE }}
         script: |
           mysql -u ${{ secrets.MYSQL_USER }} -p${{ secrets.MYSQL_PASS }} ${{ secrets.MYSQL_DB }} < /var/www/html/php_exam/src/db/script.sql
