@@ -6,7 +6,7 @@ class Album extends DefaultModel {
     public function getAll(): bool|array {
         $sql = "
             SELECT a.AlbumId, a.Title as AlbumTitle, ar.ArtistId, ar.Name as ArtistName from Album a
-            INNER JOIN artist ar on a.ArtistId = ar.ArtistId;
+            INNER JOIN Artist ar on a.ArtistId = ar.ArtistId;
         ";
         $stmt = $this->execute($sql);
         return $stmt->fetchAll();
@@ -15,7 +15,7 @@ class Album extends DefaultModel {
     public function search(string $searchTerm): bool|array {
         $sql = "
             SELECT a.AlbumId, a.Title as AlbumTitle, ar.ArtistId, ar.Name as ArtistName from Album a
-            INNER JOIN artist ar ON a.ArtistId = ar.ArtistId
+            INNER JOIN Artist ar ON a.ArtistId = ar.ArtistId
             WHERE a.Title LIKE ?;
         ";
         $stmt = $this->execute($sql, ['%' . $searchTerm . '%']);
