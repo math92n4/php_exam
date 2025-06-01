@@ -38,15 +38,15 @@ class Router {
         $callback = null;
         $params = [];
 
-        // Iterate through all routes for the current method
+        // loop through all routes for $method
         foreach ($this->routes[$method] as $route => $action) {
-            // Convert dynamic parts like {id} to regex
+            // handle path params with regex eg {id}
             $routeRegex = preg_replace('/\{(\w+)\}/', '(?P<$1>[^/]+)', $route);
-            
-            // Match the route against the current path
+
+            // check if the current request path matches the route regex
             if (preg_match('#^' . $routeRegex . '$#', $path, $matches)) {
                 $callback = $action;
-                // Extract named parameters from the route and pass them as an associative array
+                // pass the params to the callback function
                 $params = array_filter($matches, 'is_string', ARRAY_FILTER_USE_KEY);
                 break;
             }
@@ -60,24 +60,22 @@ class Router {
             return;
         }
 
-        // Split the callback into controller and method
+        // split the controller and action
         [$controller, $action] = explode('@', $callback);
 
-        // Require the controller file
-        require_once "src/controller/{$controller}.php";
+        // create controller instance
         $controllerInstance = new $controller($this->request);
 
+        // call the controller with the correct action and with params
+        $result = call_user_func_array([$controllerInstance, $action], $params);
+
+        $statusCode = http_response_code();
+        Logger::log("$method $path $statusCode " . ($statusCode === 200 ? 'OK' : ''));
+
+        echo json_encode($result);
+
+    } 
+
         
-            // Call the controller method and pass individual parameters from the $params array
-            $result = call_user_func_array([$controllerInstance, $action], $params); // Pass parameters dynamically
-
-            $statusCode = http_response_code();
-            Logger::log("$method $path $statusCode " . ($statusCode === 200 ? 'OK' : ''));
-
-            echo json_encode($result);
-
-        } 
-
-        
-    }
+}
 

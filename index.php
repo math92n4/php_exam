@@ -70,6 +70,7 @@ $router->delete('/playlists/{id}', 'PlaylistController@delete');
 // DOCS
 $router->get('/docs', 'DocsController@getDocs');
 
+header('Content-Type: application/json');
 
 try {
     $router->resolve();
@@ -77,7 +78,6 @@ try {
 } catch (TypeError $e) {
 
     http_response_code(400);
-    header('Content-Type: application/json');
     echo json_encode([
         'error' => 'Invalid parameter type. Go to /docs for info'
     ]);
@@ -85,7 +85,6 @@ try {
 } catch (Exception $e) {
 
     http_response_code(500);
-    header('Content-Type: application/json');
     echo json_encode([
         'error' => 'Server error'
     ]);
