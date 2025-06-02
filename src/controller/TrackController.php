@@ -61,6 +61,10 @@ class TrackController extends DefaultController {
                     return $this->response(['error' => "$field is required"], 400);
                 }
             }
+
+            $data['name'] = strip_tags(trim($data['name']));
+            $data['composer'] = strip_tags(trim($data['composer']));
+
             $trackId = $this->track->add([
                 $data['name'],
                 $data['album_id'],
@@ -108,7 +112,13 @@ class TrackController extends DefaultController {
 
             foreach ($keyMap as $field => $dbColumn) {
                 if (isset($data[$field])) {
-                    $updateFields[$dbColumn] = $data[$field];
+                    $value = $data[$field];
+
+                    if(in_array($field, ['name', 'composer'])) {
+                        $value = strip_tags(trim($value));
+                    }
+
+                    $updateFields[$dbColumn] = $value;
                 }
             }
 
@@ -126,7 +136,7 @@ class TrackController extends DefaultController {
             return $this->response($updatedTrack);
 
         } catch(Exception $e) {
-            return $this->response(['error' => $e->getMessage()], 500);
+            return $this->response(['error' => "Failed to update track"], 500);
         }
         
     }

@@ -82,6 +82,8 @@ class PlaylistController extends DefaultController {
                 return $this->response(['error' => 'Missing name field']);
             }
 
+            $name = strip_tags(trim($name));
+
             $playlistId = $this->playlist->add($name);
 
             if(!$playlistId) {

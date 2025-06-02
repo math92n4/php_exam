@@ -61,7 +61,7 @@ class Track extends DefaultModel {
         
         $stmt = $this->execute($sql, $values);
 
-        return $stmt->rowCount() > 0;
+        return $stmt !== false;
     }
 
     private function isOnPlaylist(int $id) {

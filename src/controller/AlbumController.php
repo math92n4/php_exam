@@ -68,6 +68,8 @@ class AlbumController extends DefaultController {
                 return $this->response(['error' => 'Missing required fields: title or artist_id'], 400);
             }
 
+            $data['title'] = strip_tags(trim($data['title']));
+
             $albumId = $this->album->add($data);
             $createdAlbum = $this->album->getById($albumId);
 
@@ -85,6 +87,10 @@ class AlbumController extends DefaultController {
 
             if (empty($data['title']) && empty($data['artist_id'])) {
                 return $this->response(['error' => 'Provide either title or artist_id'], 400);
+            }
+
+            if(isset($data['title'])) {
+                $data['title'] = strip_tags(trim($data['title']));
             }
 
             $success = $this->album->put($id, $data);

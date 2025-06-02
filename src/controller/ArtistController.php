@@ -82,6 +82,8 @@ class ArtistController extends DefaultController {
 
             if(!isset($data['name'])) {
                 return $this->response(['error' => 'Missing name field']);
+            } else {
+                $data['name'] = strip_tags(trim($data['name']));
             }
 
             $artistId = $this->artist->add($data['name']);
